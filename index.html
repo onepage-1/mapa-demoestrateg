@@ -15,11 +15,14 @@
             margin: 0;
             padding: 0;
             color: #333;
+            display: flex; /* Usado para centralizar o conteúdo principal */
+            flex-direction: column; /* Organiza os elementos em coluna */
+            min-height: 100vh; /* Garante que o conteúdo preencha a tela */
         }
 
         /* Cabeçalho */
         header {
-            background-color: #1a237e; /* Azul mais escuro */
+            background-color: #1a237e;
             color: white;
             text-align: center;
             padding: 30px 0;
@@ -34,26 +37,33 @@
 
         /* Seção principal */
         main {
+           flex: 1; /* Expande para preencher o espaço disponível */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: calc(100vh - 100px); /* Ajusta a altura */
             text-align: center;
             padding: 20px;
         }
 
-         main h2 {
-            color: #1a237e; /* Azul mais escuro */
+        main h2 {
+            color: #1a237e;
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 30px;
-         }
+        }
+        #data-atualizacao {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
 
         /* Botão de download */
         .download-btn {
             display: inline-block;
-            background-color: #283593; /* Azul mais escuro */
+            background-color: #283593;
             color: white;
             padding: 15px 35px;
             font-size: 1.1rem;
@@ -66,22 +76,23 @@
         }
 
         .download-btn:hover {
-            background-color: #1a237e; /* Tom mais escuro */
+            background-color: #1a237e;
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
+
         .download-btn:active {
             transform: translateY(1px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         /* Rodapé */
-        footer {
+         footer {
             background-color: #1a237e; /* Azul mais escuro */
             color: white;
             text-align: center;
             padding: 20px 0;
             font-size: 1rem;
-            margin-top: 50px;
+            margin-top: auto; /* Garante que o rodapé fique sempre na parte inferior da tela */
              box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
         }
     </style>
@@ -94,7 +105,8 @@
 
     <!-- Conteúdo principal -->
     <main>
-        <h2>Baixe a planilha mais recente</h2>
+    <h2 id="data-atualizacao-titulo"></h2>
+        <div id="data-atualizacao"></div>
         <a href="Mapa Estrategico.xlsx" class="download-btn" download>Download</a>
     </main>
 
@@ -102,5 +114,23 @@
     <footer>
         © 2025 BAT Brasil - Todos os direitos reservados.
     </footer>
+
+ <script>
+    function obterDataAtualFormatada() {
+        const dataAtual = new Date();
+        const opcoes = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
+        const dataFormatada = dataAtual.toLocaleDateString('pt-BR', opcoes);
+        return dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1); // Capitaliza a primeira letra
+    }
+
+    function atualizarTextoData() {
+        const dataAtualizada = obterDataAtualFormatada();
+        document.getElementById('data-atualizacao-titulo').textContent = 'Planilha foi atualizada hoje, ';
+        document.getElementById('data-atualizacao').textContent = dataAtualizada;
+    }
+
+    atualizarTextoData();
+
+</script>
 </body>
 </html>
